@@ -1,0 +1,39 @@
+# Build output
+Telemedicine/build-release/
+Telemedicine/build-debug/
+Telemedicine/release/
+Telemedicine/debug/
+Telemedicine/Makefile
+Telemedicine/Makefile.*
+Telemedicine/ui_mainwindow.h
+build-*/
+
+# Qt Creator
+Telemedicine/.qtc_clangd/
+Telemedicine/.qmake.stash
+Telemedicine/*.pro.user
+Telemedicine/*.pro.user.*
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Temporary build scripts
+build.bat
+build_mingw.bat
+build_msvc.bat
+
+# DLLs (too large for GitHub)
+Telemedicine/dll/
+
+# Binary images
+*.exe
+*.dll
+*.lib
+*.a
+*.o
+*.obj
