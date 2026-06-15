@@ -9,6 +9,8 @@
 
 int main(int argc, char *argv[])
 {
+    //放大1.3倍
+    //qputenv("QT_SCALE_FACTOR", "1.5");
     QApplication a(argc, argv);
 
     // 先检查驱动

@@ -1,21 +1,43 @@
-﻿#ifndef MAINWINDOW_H
+#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
 #include <QSqlDatabase>
-#include<QMessageBox>
-#include<vector>
+#include <QMessageBox>
+#include <vector>
 #include "opencv2/opencv.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
-#include<QSqlTableModel>
-#include<QTimer>
-#include<QDebug>
+#include <QSqlTableModel>
+#include <QSqlQuery>
+#include <QTimer>
+#include <QDebug>
+#include <QPushButton>
+#include <QLabel>
+#include <QMouseEvent>
+#include <QEvent>
+#include <QMap>
+
 using namespace cv;
 using namespace std;
+
 namespace Ui {
 class MainWindow;
 }
+
+// 可点击的 Label，用于照片上传
+class ClickableLabel : public QLabel {
+    Q_OBJECT
+public:
+    explicit ClickableLabel(QWidget *parent = nullptr) : QLabel(parent) {}
+signals:
+    void clicked();
+protected:
+    void mousePressEvent(QMouseEvent *event) override {
+        emit clicked();
+        QLabel::mousePressEvent(event);
+    }
+};
 
 class MainWindow : public QMainWindow
 {
@@ -33,14 +55,21 @@ public:
     void ctImgHoughCircles();
     void showUserPhoto();
 
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+
 private slots:
     void onTimeOut();
-
     void on_startPushButton_clicked();
-
     void on_basicTableView_clicked(const QModelIndex &index);
-
     void on_tabWidget_tabBarClicked(int index);
+
+    // 新增的槽函数
+    void addPatient();
+    void savePatient();
+    void deletePatient();
+    void saveCaseHistory();
+    void uploadPhoto();
 
 private:
     Ui::MainWindow *ui;
@@ -50,6 +79,14 @@ private:
     QSqlTableModel *model;
     QSqlTableModel *model_d;
     QTimer *myTimer;
+
+    ClickableLabel *clickablePhotoLabel;
+
+    // 窗口等比缩放
+    QSize m_baseSize;
+    QMap<QWidget*, QRect> m_originalRects;
+    QMap<QWidget*, int> m_originalFontSizes;
+    void recordGeometries(QWidget* parent);
 };
 
 #include <QDebug>

@@ -1,0 +1,39 @@
+/* ============================================================
+   远程医疗系统 - 全局样式表
+   主色调：浅蓝 #ecf7f9 | 强调色：亮蓝 #3b82f6
+   ============================================================ */
+
+/* ===== 全局背景 ===== */
+QMainWindow {
+  background-color: #ecf7f9;
+}
+
+QWidget#centralWidget {
+  background-color: #ecf7f9;
+}
+
+/* ===== 科室树 ===== */
+QTreeWidget {
+  background-color: #ecf7f9;
+}
+
+/* ===== 通用按钮 ===== */
+QPushButton {
+  background-color: #3b82f6;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+}
+
+QPushButton:hover {
+  background-color: #2563eb;
+}
+
+QPushButton:pressed {
+  background-color: #1d4ed8;
+}
+
+QPushButton:disabled {
+  background-color: #d1d5db;
+  color: #9ca3af;
+}

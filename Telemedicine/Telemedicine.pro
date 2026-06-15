@@ -63,3 +63,5 @@ INCLUDEPATH +=$$PWD\packages\opencv4_x64-windows\include
 LIBS+=$$PWD\packages\opencv4_x64-windows\lib\opencv_*.lib
 LIBS += -L$$PWD\packages\mysql_lib\x64_8.1\lib -llibmysql
 INCLUDEPATH += $$PWD\packages\mysql_lib\x64_8.1\include
+
+msvc: QMAKE_CXXFLAGS += /utf-8
