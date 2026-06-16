@@ -37,3 +37,9 @@ QPushButton:disabled {
   background-color: #d1d5db;
   color: #9ca3af;
 }
+
+/* ===== 消息框按钮（Yes/No/OK）===== */
+QMessageBox QPushButton {
+  min-width: 80px;
+  min-height: 32px;
+}

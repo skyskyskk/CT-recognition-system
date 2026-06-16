@@ -1,4 +1,7 @@
-﻿#include "mainwindow.h"
+// 远程医疗诊断系统主程序入口
+// 负责初始化应用程序、建立数据库连接、启动主窗口
+
+#include "mainwindow.h"
 #include <QApplication>
 #include <QProcess>
 #include <QMessageBox>
@@ -7,43 +10,34 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 
+// 主函数：程序入口点
+// argc为命令行参数个数，argv为命令行参数数组
+// 返回程序退出码
 int main(int argc, char *argv[])
 {
-    //放大1.3倍
-    //qputenv("QT_SCALE_FACTOR", "1.5");
+    // 注释：界面缩放
+    // qputenv("QT_SCALE_FACTOR", "1.5");
+    
+    // 初始化Qt应用程序
     QApplication a(argc, argv);
 
-    // 先检查驱动
-    qDebug() << "可用SQL驱动：" << QSqlDatabase::drivers();
-
-    if(!createMySqlConn()){
-        qDebug() << "首次连接失败，尝试启动MySQL服务...";
-
-        // 启动MySQL服务
+    // 尝试连接数据库，失败则自动启动MySQL服务后重试
+    if (!createMySqlConn()) {
         QProcess process;
         process.start("net", QStringList() << "start" << "MySQL80");
-
-        // 等待服务启动
-        if(!process.waitForStarted(3000)) {
-            QMessageBox::critical(nullptr, "错误", "无法启动MySQL服务！");
-            return 1;
-        }
-
         process.waitForFinished(5000);
-
-        // 等待MySQL完全启动
         QThread::sleep(3);
-
-        // 再次尝试连接
-        if(!createMySqlConn()) {
+        if (!createMySqlConn()) {
             QMessageBox::critical(nullptr, "数据库错误",
-                                 "MySQL连接失败，请检查MySQL80服务是否已启动！\n"
-                                 "或者检查数据库配置是否正确（用户名：root，密码：123456）");
+                                 "MySQL连接失败，请检查MySQL80服务是否已启动！");
             return 1;
         }
     }
 
+    // 创建并显示主窗口
     MainWindow w;
     w.show();
+    
+    // 进入Qt事件循环
     return a.exec();
 }
